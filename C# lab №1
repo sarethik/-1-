@@ -1,0 +1,91 @@
+using System;
+using System.Text;
+
+namespace Lab1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Лабораторная работа №1\n");
+            Console.WriteLine("1.1 Точки на плоскости заданы своими координатами х и у, которые хранятся");
+            Console.WriteLine("в двумерном массиве.Найти пару самых удаленных друг от друга точек.\n\n");
+            Random rnd = new Random();
+            int[,] points = new int[3, 2];
+            for (int j = 0; j < 3; j++)
+            {
+                for (int p = 0; p < 2; p++)
+                {
+                    points[j, p] = rnd.Next(-10, 10);
+                }
+            }
+
+            double[] d = new double[3];
+
+            d[0] = Math.Sqrt(Math.Pow(points[0, 0] - points[1, 0], 2) + Math.Pow(points[0, 1] - points[1, 1], 2));
+
+            d[1] = Math.Sqrt(Math.Pow(points[0, 0] - points[2, 0], 2) + Math.Pow(points[0, 1] - points[2, 1], 2));
+
+            d[2] = Math.Sqrt(Math.Pow(points[1, 0] - points[2, 0], 2) + Math.Pow(points[1, 1] - points[2, 1], 2));
+
+            double far = 0;
+            int which = 0;
+            for (int j = 0; j < 2; j++)
+            {
+                far = d[j];
+                if (d[j + 1] > d[j])
+                {
+                    far = d[j + 1];
+                    which = j + 1;
+                }
+            }
+
+            switch (which)
+            {
+                case (0):
+                    Console.Write("расстояние между точками x({0}, {1}) и y({2}, {3}) = {4}\n\n", points[0, 0], points[0, 1], points[1, 0], points[1, 1], far);
+                    break;
+
+                case (1):
+                    Console.Write("расстояние между точками x({0}, {1}) и y({2}, {3}) = {4}\n\n", points[0, 0], points[0, 1], points[2, 0], points[2, 1], far);
+                    break;
+
+                case (2):
+                    Console.Write("расстояние между точками x({0}, {1}) и y({2}, {3}) = {4}\n\n", points[1, 0], points[1, 1], points[2, 0], points[2, 1], far);
+                    break;
+            }
+
+            Console.WriteLine("\n\n2.1 Текстовые сообщения часто печатаются строчными буквами, но многие сотовые");
+            Console.WriteLine("телефоны имеют встроенные средства преобразования строчной буквы в прописную");
+            Console.WriteLine("после символа пунктуации, как точка или знак вопроса. Составить программу,");
+            Console.WriteLine("которая будет вводить сообщение в переменную String(на одной строке),");
+            Console.WriteLine(" а затем обрабатывать его с получением новой строки с прописными буквами");
+            Console.WriteLine("в соответствующих местах.\n\n");
+
+            StringBuilder line = new StringBuilder(Console.ReadLine());
+
+            int i = 0;
+            while (i != line.Length)
+            {
+                if (line[i] == '.')
+                {
+                    if (line[i + 1] == ' ')
+                    {
+                       line[i + 2] = char.ToUpper(line[i+2]);
+                        i++;
+                        continue;
+                    }
+                    line[i + 1] = char.ToUpper(line[i+1]);
+                    i++;
+                    continue;
+                }
+                i++;
+            }
+            for(int j = 0; j < line.Length; j++)
+            {
+                Console.Write("{0}", line[j]);
+            }
+
+         }
+    }
+}
