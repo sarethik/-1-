@@ -1,11 +1,20 @@
 using System;
 using System.Text;
+using System.Text.RegularExpressions;
+
 
 namespace Lab1
 {
     class Program
     {
-        static void Main(string[] args)
+        static void FindMatches(string str, string pattern)
+        {
+            Regex pat = new Regex(pattern);
+            MatchCollection match = pat.Matches(str);
+            Console.WriteLine("Строка = {0}\t Образец = {1} \t Найдено {2}", str, pattern, match.Count);
+        }
+
+        static void Main()
         {
             Console.WriteLine("Лабораторная работа №1\n");
             Console.WriteLine("1.1 Точки на плоскости заданы своими координатами х и у, которые хранятся");
@@ -63,29 +72,40 @@ namespace Lab1
             Console.WriteLine("в соответствующих местах.\n\n");
 
             StringBuilder line = new StringBuilder(Console.ReadLine());
+            StringBuilder changedLine = new StringBuilder();
+
+            changedLine = line;
 
             int i = 0;
-            while (i != line.Length)
+            while (i != changedLine.Length)
             {
-                if (line[i] == '.')
+                if (changedLine[i] == '.' || changedLine[i] == '?' || changedLine[i] == '!')
                 {
-                    if (line[i + 1] == ' ')
+                    if (changedLine[i + 1] == ' ')
                     {
-                       line[i + 2] = char.ToUpper(line[i+2]);
+                        changedLine[i + 2] = char.ToUpper(changedLine[i + 2]);
                         i++;
                         continue;
                     }
-                    line[i + 1] = char.ToUpper(line[i+1]);
+                    changedLine[i + 1] = char.ToUpper(changedLine[i + 1]);
                     i++;
                     continue;
                 }
                 i++;
             }
-            for(int j = 0; j < line.Length; j++)
+            for (int j = 0; j < changedLine.Length; j++)
             {
-                Console.Write("{0}", line[j]);
+                Console.Write("{0}", changedLine[j]);
             }
 
-         }
+            Console.WriteLine("\n\n2.1 3.1	Задан текст. Определить входит ли в него заданное слово и сколько раз.\n\n");
+
+            Console.WriteLine("Введите образец для поиска");
+            string pattern = Console.ReadLine();
+            Console.WriteLine("Введите строку");
+            string str = Console.ReadLine();
+            FindMatches(str, pattern);
+        }
+    
     }
 }
