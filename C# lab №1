@@ -53,6 +53,11 @@ namespace Lab1
                 Console.Write("{0}", secondString[j]);
             }
         }
+        
+        static double Distance(int aX, int aY, int bX, int bY)
+        {
+            return Math.Sqrt(Math.Pow(aX - bX, 2) + Math.Pow(aY - bY, 2));
+        }
 
 
         static void Main(string[] args)
@@ -68,12 +73,9 @@ namespace Lab1
 
             double[] d = new double[3];
 
-            d[0] = Math.Sqrt(Math.Pow(points[0, 0] - points[1, 0], 2) + Math.Pow(points[0, 1] - points[1, 1], 2));
-
-            d[1] = Math.Sqrt(Math.Pow(points[0, 0] - points[2, 0], 2) + Math.Pow(points[0, 1] - points[2, 1], 2));
-
-            d[2] = Math.Sqrt(Math.Pow(points[1, 0] - points[2, 0], 2) + Math.Pow(points[1, 1] - points[2, 1], 2));
-
+            d[0] = Distance(points[0, 0], points[0, 1], points[1, 0], points[1, 1]);
+            d[1] = Distance(points[0, 0], points[0, 1], points[2, 0], points[2, 1]);
+            d[2] = Distance(points[1, 0], points[1, 1], points[2, 0], points[2, 1]);
 
             double far = 0;
             int which = 0;
