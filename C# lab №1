@@ -7,7 +7,7 @@ namespace Lab1
 {
     class Program
     {
-        static void FindMatches(string str, string pattern)
+        static void FindMatches (string str, string pattern)
         {
             Regex pat = new Regex(pattern);
             MatchCollection match = pat.Matches(str);
@@ -26,7 +26,7 @@ namespace Lab1
             }
         }
 
-        static void MakeItBigger(StringBuilder firstString, StringBuilder secondString)
+        static void MakeItBigger (StringBuilder firstString, StringBuilder secondString)
         {
             secondString = firstString;
             int i = 0;
@@ -53,17 +53,16 @@ namespace Lab1
                 Console.Write("{0}", secondString[j]);
             }
         }
-        
-        static double Distance(int aX, int aY, int bX, int bY)
+
+        static double Distance (int aX, int aY, int bX, int bY)
         {
             return Math.Sqrt(Math.Pow(aX - bX, 2) + Math.Pow(aY - bY, 2));
         }
 
-
-        static void Main(string[] args)
+        static void Main (string[] args)
         {
-
-            // 1.1
+            //1.1
+            Console.WriteLine("\nЗадание 1.1\n\n");
             int thirst = 3;
             int second = 2;
 
@@ -76,6 +75,7 @@ namespace Lab1
             d[0] = Distance(points[0, 0], points[0, 1], points[1, 0], points[1, 1]);
             d[1] = Distance(points[0, 0], points[0, 1], points[2, 0], points[2, 1]);
             d[2] = Distance(points[1, 0], points[1, 1], points[2, 0], points[2, 1]);
+
 
             double far = 0;
             int which = 0;
@@ -105,19 +105,24 @@ namespace Lab1
             }
 
             //2.1
+            Console.WriteLine("\n\nЗадание 2.1 \n\n");
 
+            Console.Write("Введите строку: ");
             StringBuilder line = new StringBuilder(Console.ReadLine());
             StringBuilder changedLine = new StringBuilder();
 
 
             MakeItBigger(line, changedLine);
-            
-            // 3.1
 
-            Console.WriteLine("Введите образец для поиска");
+            //3.1
+            Console.WriteLine("\n\nЗадание 3.1 \n\n");
+
+            Console.Write("Введите образец для поиска: ");
             string pattern = Console.ReadLine();
 
-            Console.WriteLine("Введите строку");
+            Console.WriteLine();
+
+            Console.Write("Введите строку: ");
             string str = Console.ReadLine();
 
 
