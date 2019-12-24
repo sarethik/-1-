@@ -14,20 +14,57 @@ namespace Lab1
             Console.WriteLine("Строка = {0}\t Образец = {1} \t Найдено {2}", str, pattern, match.Count);
         }
 
-        static void Main()
+        static void randomize (int[,] points, int thirst, int second)
         {
-            Console.WriteLine("Лабораторная работа №1\n");
-            Console.WriteLine("1.1 Точки на плоскости заданы своими координатами х и у, которые хранятся");
-            Console.WriteLine("в двумерном массиве.Найти пару самых удаленных друг от друга точек.\n\n");
             Random rnd = new Random();
-            int[,] points = new int[3, 2];
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < thirst; j++)
             {
-                for (int p = 0; p < 2; p++)
+                for (int p = 0; p < second; p++)
                 {
                     points[j, p] = rnd.Next(-10, 10);
                 }
             }
+        }
+
+        static void MakeItBigger(StringBuilder firstString, StringBuilder secondString)
+        {
+            secondString = firstString;
+            int i = 0;
+            while (i != secondString.Length)
+            {
+                if (secondString[i] == '.' || secondString[i] == '?' || secondString[i] == '!')
+                {
+                    if (secondString[i + 1] == ' ')
+                    {
+                        secondString[i + 2] = char.ToUpper(secondString[i + 2]);
+                        i++;
+                        continue;
+                    }
+                    secondString[i + 1] = char.ToUpper(secondString[i + 1]);
+                    i++;
+                    continue;
+                }
+                i++;
+            }
+
+            for (int j = 0; j < secondString.Length; j++)
+
+            {
+                Console.Write("{0}", secondString[j]);
+            }
+        }
+
+
+        static void Main(string[] args)
+        {
+
+            // 1.1
+            int thirst = 3;
+            int second = 2;
+
+            int[,] points = new int[thirst, second];
+
+            randomize(points, thirst, second);
 
             double[] d = new double[3];
 
@@ -36,6 +73,7 @@ namespace Lab1
             d[1] = Math.Sqrt(Math.Pow(points[0, 0] - points[2, 0], 2) + Math.Pow(points[0, 1] - points[2, 1], 2));
 
             d[2] = Math.Sqrt(Math.Pow(points[1, 0] - points[2, 0], 2) + Math.Pow(points[1, 1] - points[2, 1], 2));
+
 
             double far = 0;
             int which = 0;
@@ -64,47 +102,25 @@ namespace Lab1
                     break;
             }
 
-            Console.WriteLine("\n\n2.1 Текстовые сообщения часто печатаются строчными буквами, но многие сотовые");
-            Console.WriteLine("телефоны имеют встроенные средства преобразования строчной буквы в прописную");
-            Console.WriteLine("после символа пунктуации, как точка или знак вопроса. Составить программу,");
-            Console.WriteLine("которая будет вводить сообщение в переменную String(на одной строке),");
-            Console.WriteLine(" а затем обрабатывать его с получением новой строки с прописными буквами");
-            Console.WriteLine("в соответствующих местах.\n\n");
+            //2.1
 
             StringBuilder line = new StringBuilder(Console.ReadLine());
             StringBuilder changedLine = new StringBuilder();
 
-            changedLine = line;
 
-            int i = 0;
-            while (i != changedLine.Length)
-            {
-                if (changedLine[i] == '.' || changedLine[i] == '?' || changedLine[i] == '!')
-                {
-                    if (changedLine[i + 1] == ' ')
-                    {
-                        changedLine[i + 2] = char.ToUpper(changedLine[i + 2]);
-                        i++;
-                        continue;
-                    }
-                    changedLine[i + 1] = char.ToUpper(changedLine[i + 1]);
-                    i++;
-                    continue;
-                }
-                i++;
-            }
-            for (int j = 0; j < changedLine.Length; j++)
-            {
-                Console.Write("{0}", changedLine[j]);
-            }
-
-            Console.WriteLine("\n\n2.1 3.1	Задан текст. Определить входит ли в него заданное слово и сколько раз.\n\n");
+            MakeItBigger(line, changedLine);
+            
+            // 3.1
 
             Console.WriteLine("Введите образец для поиска");
             string pattern = Console.ReadLine();
+
             Console.WriteLine("Введите строку");
             string str = Console.ReadLine();
+
+
             FindMatches(str, pattern);
+
         }
     
     }
