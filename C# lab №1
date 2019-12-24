@@ -14,7 +14,7 @@ namespace Lab1
             Console.WriteLine("Строка = {0}\t Образец = {1} \t Найдено {2}", str, pattern, match.Count);
         }
 
-        static void randomize (int[,] points, int thirst, int second)
+        static void Randomize (int[,] points, int thirst, int second)
         {
             Random rnd = new Random();
             for (int j = 0; j < thirst; j++)
@@ -69,7 +69,7 @@ namespace Lab1
 
             int[,] points = new int[thirst, second];
 
-            randomize(points, thirst, second);
+            Randomize(points, thirst, second);
 
             double[] d = new double[3];
 
