@@ -14,43 +14,37 @@ namespace Lab1
             Console.WriteLine("Строка = {0}\t Образец = {1} \t Найдено {2}", str, pattern, match.Count);
         }
 
-        static void Randomize (int[,] points, int thirst, int second)
+        static void Randomize (int[,] points, int point, int axis)
         {
             Random rnd = new Random();
-            for (int j = 0; j < thirst; j++)
+            for (int j = 0; j < point; j++)
             {
-                for (int p = 0; p < second; p++)
+                for (int p = 0; p < axis; p++)
                 {
                     points[j, p] = rnd.Next(-10, 10);
                 }
             }
         }
-
-        static void MakeItBigger (StringBuilder firstString, StringBuilder secondString)
+       
+        static void TheLetterToUpper (StringBuilder str)
         {
-            secondString = firstString;
+
             int i = 0;
-            while (i != secondString.Length)
+            while (i != str.Length)
             {
-                if (secondString[i] == '.' || secondString[i] == '?' || secondString[i] == '!')
+                if (str[i] == '.' || str[i] == '?' || str[i] == '!')
                 {
-                    if (secondString[i + 1] == ' ')
+                    if (str[i + 1] == ' ')
                     {
-                        secondString[i + 2] = char.ToUpper(secondString[i + 2]);
+                        str[i + 2] = char.ToUpper(str[i + 2]);
                         i++;
                         continue;
                     }
-                    secondString[i + 1] = char.ToUpper(secondString[i + 1]);
+                    str[i + 1] = char.ToUpper(str[i + 1]);
                     i++;
                     continue;
                 }
                 i++;
-            }
-
-            for (int j = 0; j < secondString.Length; j++)
-
-            {
-                Console.Write("{0}", secondString[j]);
             }
         }
 
@@ -63,43 +57,40 @@ namespace Lab1
         {
             //1.1
             Console.WriteLine("\nЗадание 1.1\n\n");
-            int thirst = 3;
-            int second = 2;
 
-            int[,] points = new int[thirst, second];
-
-            Randomize(points, thirst, second);
-
+            int[,] points = new int[3, 2];
             double[] d = new double[3];
+
+            Randomize(points, 3, 2);
 
             d[0] = Distance(points[0, 0], points[0, 1], points[1, 0], points[1, 1]);
             d[1] = Distance(points[0, 0], points[0, 1], points[2, 0], points[2, 1]);
             d[2] = Distance(points[1, 0], points[1, 1], points[2, 0], points[2, 1]);
 
-            double far = 0;
-            int which = 0;
+            double lineLength = 0;
+            int lineNumber = 0;
             for (int j = 0; j < 2; j++)
             {
-                far = d[j];
+                lineLength = d[j];
                 if (d[j + 1] > d[j])
                 {
-                    far = d[j + 1];
-                    which = j + 1;
+                    lineLength = d[j + 1];
+                    lineNumber = j + 1;
                 }
             }
 
-            switch (which)
+            switch (lineNumber)
             {
                 case (0):
-                    Console.Write("расстояние между точками x({0}, {1}) и y({2}, {3}) = {4}\n\n", points[0, 0], points[0, 1], points[1, 0], points[1, 1], far);
+                    Console.Write("расстояние между точками x({0}, {1}) и y({2}, {3}) = {4}\n\n", points[0, 0], points[0, 1], points[1, 0], points[1, 1], lineLength);
                     break;
 
                 case (1):
-                    Console.Write("расстояние между точками x({0}, {1}) и y({2}, {3}) = {4}\n\n", points[0, 0], points[0, 1], points[2, 0], points[2, 1], far);
+                    Console.Write("расстояние между точками x({0}, {1}) и y({2}, {3}) = {4}\n\n", points[0, 0], points[0, 1], points[2, 0], points[2, 1], lineLength);
                     break;
 
                 case (2):
-                    Console.Write("расстояние между точками x({0}, {1}) и y({2}, {3}) = {4}\n\n", points[1, 0], points[1, 1], points[2, 0], points[2, 1], far);
+                    Console.Write("расстояние между точками x({0}, {1}) и y({2}, {3}) = {4}\n\n", points[1, 0], points[1, 1], points[2, 0], points[2, 1], lineLength);
                     break;
             }
 
@@ -107,22 +98,29 @@ namespace Lab1
             Console.WriteLine("\n\nЗадание 2.1 \n\n");
 
             Console.Write("Введите строку: ");
-            StringBuilder line = new StringBuilder(Console.ReadLine());
-            StringBuilder changedLine = new StringBuilder();
+            StringBuilder str = new StringBuilder(Console.ReadLine());
 
-            MakeItBigger(line, changedLine);
+            TheLetterToUpper(str);
+
+            for (int j = 0; j < str.Length; j++)
+
+            {
+                Console.Write("{0}", str[j]);
+            }
 
             //3.1
             Console.WriteLine("\n\nЗадание 3.1 \n\n");
 
             Console.Write("Введите образец для поиска: ");
             string pattern = Console.ReadLine();
+
             Console.WriteLine();
 
             Console.Write("Введите строку: ");
-            string str = Console.ReadLine();
-            
-            FindMatches(str, pattern);
+            string stringToCheck = Console.ReadLine();
+
+
+            FindMatches(stringToCheck, pattern);
 
         }
     
