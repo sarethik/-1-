@@ -76,7 +76,6 @@ namespace Lab1
             d[1] = Distance(points[0, 0], points[0, 1], points[2, 0], points[2, 1]);
             d[2] = Distance(points[1, 0], points[1, 1], points[2, 0], points[2, 1]);
 
-
             double far = 0;
             int which = 0;
             for (int j = 0; j < 2; j++)
@@ -111,7 +110,6 @@ namespace Lab1
             StringBuilder line = new StringBuilder(Console.ReadLine());
             StringBuilder changedLine = new StringBuilder();
 
-
             MakeItBigger(line, changedLine);
 
             //3.1
@@ -119,13 +117,11 @@ namespace Lab1
 
             Console.Write("Введите образец для поиска: ");
             string pattern = Console.ReadLine();
-
             Console.WriteLine();
 
             Console.Write("Введите строку: ");
             string str = Console.ReadLine();
-
-
+            
             FindMatches(str, pattern);
 
         }
