@@ -7,26 +7,26 @@ namespace Lab1
 {
     class Program
     {
-        static void FindMatches (string str, string pattern)
+        static void FindMatches(string pattern, string stringToCheck)
         {
             Regex pat = new Regex(pattern);
-            MatchCollection match = pat.Matches(str);
-            Console.WriteLine("Строка = {0}\t Образец = {1} \t Найдено {2}", str, pattern, match.Count);
+            MatchCollection match = pat.Matches(stringToCheck);
+            Console.WriteLine("Строка = {0}\t Образец = {1} \t Найдено {2}", stringToCheck, pattern, match.Count);
         }
 
-        static void Randomize (int[,] points, int point, int axis)
+        static void Randomize(int[,] points, int pointQuantity, int axisQuantity)
         {
             Random rnd = new Random();
-            for (int j = 0; j < point; j++)
+            for (int j = 0; j < pointQuantity; j++)
             {
-                for (int p = 0; p < axis; p++)
+                for (int p = 0; p < axisQuantity; p++)
                 {
                     points[j, p] = rnd.Next(-10, 10);
                 }
             }
         }
        
-        static void TheLetterToUpper (StringBuilder str)
+        static void TheLetterToUpper(StringBuilder str)
         {
 
             int i = 0;
@@ -36,7 +36,11 @@ namespace Lab1
                 {
                     if (str[i + 1] == ' ')
                     {
-                        str[i + 2] = char.ToUpper(str[i + 2]);
+                        while(str[i + 1] == ' ')
+                        {
+                            i++;
+                        }
+                        str[i + 1] = char.ToUpper(str[i + 1]);
                         i++;
                         continue;
                     }
@@ -48,80 +52,51 @@ namespace Lab1
             }
         }
 
-        static double Distance (int aX, int aY, int bX, int bY)
+        static double Distance(int aX, int aY, int bX, int bY) => Math.Sqrt(Math.Pow(aX - bX, 2) + Math.Pow(aY - bY, 2));
+
+        static void MaxDistance(int[,] points, ref int[,] maxPoints, int pointQuantity, int axisQuantity, double maxDistance)
         {
-            return Math.Sqrt(Math.Pow(aX - bX, 2) + Math.Pow(aY - bY, 2));
-        }
-
-        static void Main (string[] args)
-        {
-            //1.1
-            Console.WriteLine("\nЗадание 1.1\n\n");
-
-            int[,] points = new int[3, 2];
-            double[] d = new double[3];
-
-            Randomize(points, 3, 2);
-
-            d[0] = Distance(points[0, 0], points[0, 1], points[1, 0], points[1, 1]);
-            d[1] = Distance(points[0, 0], points[0, 1], points[2, 0], points[2, 1]);
-            d[2] = Distance(points[1, 0], points[1, 1], points[2, 0], points[2, 1]);
-
-            double lineLength = 0;
-            int lineNumber = 0;
-            for (int j = 0; j < 2; j++)
+            for (int i = 0; i < pointQuantity; i++)
             {
-                lineLength = d[j];
-                if (d[j + 1] > d[j])
+                for (int j = pointQuantity - 1; j > i; j--)
                 {
-                    lineLength = d[j + 1];
-                    lineNumber = j + 1;
+                    double d = Distance(points[i, 0], points[i, 1], points[j, 0], points[j, 1]);
+
+                    if (d > maxDistance)
+                    {
+                        maxDistance = d;
+                        maxPoints[0, 0] = points[i, 0];
+                        maxPoints[0, 1] = points[i, 1];
+                        maxPoints[1, 0] = points[j, 0];
+                        maxPoints[1, 1] = points[j, 1];
+                    }
                 }
             }
+        }
+        static void Main(string[] args)
+        {          
+            int axisQuantity = 2, pointQuantity = 3;
+            int[,] points = new int[pointQuantity, axisQuantity];
+            int[,] maxPoints = new int[2, 2];
+            double maxDistance = 0;
+            string pattern = "asd";
+            string stringToCheck = "asdfdgfdasd hgfh asd";
+            StringBuilder str = new StringBuilder(".a ! b ?   c");
 
-            switch (lineNumber)
-            {
-                case (0):
-                    Console.Write("расстояние между точками x({0}, {1}) и y({2}, {3}) = {4}\n\n", points[0, 0], points[0, 1], points[1, 0], points[1, 1], lineLength);
-                    break;
+            Console.WriteLine("Задание 1.1");
+            Randomize(points, pointQuantity, axisQuantity);
+            MaxDistance(points, ref maxPoints, pointQuantity, axisQuantity, maxDistance);
+            Console.WriteLine("расстояние между точками x({0}, {1}) и y({2}, {3}) = {4}\n", maxPoints[0, 0], maxPoints[0, 1], maxPoints[1, 0], maxPoints[1, 1], maxDistance);
 
-                case (1):
-                    Console.Write("расстояние между точками x({0}, {1}) и y({2}, {3}) = {4}\n\n", points[0, 0], points[0, 1], points[2, 0], points[2, 1], lineLength);
-                    break;
-
-                case (2):
-                    Console.Write("расстояние между точками x({0}, {1}) и y({2}, {3}) = {4}\n\n", points[1, 0], points[1, 1], points[2, 0], points[2, 1], lineLength);
-                    break;
-            }
-
-            //2.1
-            Console.WriteLine("\n\nЗадание 2.1 \n\n");
-
-            Console.Write("Введите строку: ");
-            StringBuilder str = new StringBuilder(Console.ReadLine());
-
+            Console.WriteLine("\nЗадание 2.1");
             TheLetterToUpper(str);
-
             for (int j = 0; j < str.Length; j++)
-
             {
                 Console.Write("{0}", str[j]);
             }
 
-            //3.1
-            Console.WriteLine("\n\nЗадание 3.1 \n\n");
-
-            Console.Write("Введите образец для поиска: ");
-            string pattern = Console.ReadLine();
-
-            Console.WriteLine();
-
-            Console.Write("Введите строку: ");
-            string stringToCheck = Console.ReadLine();
-
-
-            FindMatches(stringToCheck, pattern);
-
+            Console.WriteLine("\n\nЗадание 3.1");
+            FindMatches(pattern, stringToCheck);
         }
     
     }
